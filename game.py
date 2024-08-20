@@ -13,6 +13,10 @@ pygame.display.set_caption("Dodge and Escape with RL")
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
+BLACK = (0, 0, 0)
+
+# Font for score and collision counter
+font = pygame.font.SysFont(None, 36)
 
 # Player settings
 player_width, player_height = 50, 50
@@ -29,20 +33,29 @@ falling_objects = []
 
 # RL settings
 actions = [0, 1, 2]  # 0: Left, 1: Right, 2: Stay
-state_space_size = (WIDTH // player_speed + 1) * (WIDTH // player_speed + 1)  # Adjusted state space size
+state_space_size = (WIDTH // player_speed + 1) * (WIDTH // player_speed + 1)
 q_table = np.zeros((state_space_size, len(actions)))
-epsilon = 1.0 # Exploration rate
+epsilon = 1.0  # Exploration rate
 epsilon_decay = 0.995
 epsilon_min = 0.01
 learning_rate = 0.1
 discount_rate = 0.95
 
+# Game settings
+score = 0
+collision_count = 0
 running = True
 clock = pygame.time.Clock()
-screen.fill((5, 255, 255))
+screen.fill(WHITE)
 
 def draw_player():
     pygame.draw.rect(screen, GREEN, (player_x, player_y, player_width, player_height))
+
+def draw_score_and_collisions():
+    score_text = font.render(f"Score: {score}", True, BLACK)
+    collision_text = font.render(f"Collisions: {collision_count}", True, BLACK)
+    screen.blit(score_text, (10, 10))
+    screen.blit(collision_text, (650, 10))
 
 def create_kunai():
     x = random.randint(0, WIDTH - kunai_width)
@@ -60,10 +73,12 @@ def update_kunai():
             falling_objects.remove(obj)
 
 def check_collision():
-    global running
+    global score, collision_count
     for obj in falling_objects:
         if player_x < obj[0] + kunai_width and player_x + player_width > obj[0] and player_y < obj[1] + kunai_height and player_y + player_height > obj[1]:
-            running = False  # restart game if collision detected
+            score -= 10  # Deduct points on collision
+            collision_count += 1  # Increment collision counter
+            falling_objects.remove(obj)
 
 def get_state():
     nearest_kunai = None
@@ -104,7 +119,7 @@ def move_player(action):
         player_velocity_y = 0
 
 def run_episode():
-    global epsilon
+    global epsilon, score
     state = get_state()
     while running:
         clock.tick(60)
@@ -130,10 +145,12 @@ def run_episode():
         check_collision()
         draw_player()
         draw_kunai()
+        draw_score_and_collisions()
 
         # Get next state and reward
         next_state = get_state()
         reward = 1  # Reward for surviving
+        score += reward  # Increase score for surviving
 
         # Update Q-Table
         update_q_table(state, action, reward, next_state)
@@ -150,4 +167,5 @@ for _ in range(1000):  # Number of episodes for training
     player_x, player_y = WIDTH // 2, HEIGHT - player_height - 10
     falling_objects = []
     run_episode()
+
 pygame.quit()
