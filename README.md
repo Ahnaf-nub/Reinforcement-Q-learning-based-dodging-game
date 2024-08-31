@@ -32,13 +32,13 @@ pip install pygame numpy
 How to Run the Game
 Clone the repository:
 ```
-git clone https://github.com/your-username/dodge-and-escape-rl.git
-cd dodge-and-escape-rl
+git clone https://github.com/Ahnaf-nub/Reinforcement-Q-learning-based-dodging-game.git
+cd Reinforcement-Q-learning-based-dodging-game
 ```
 Run the game:
 
 ```
-python dodge_and_escape.py
+python game.py
 ```
 The game will automatically start, and the player will begin training to avoid the falling objects.
 
