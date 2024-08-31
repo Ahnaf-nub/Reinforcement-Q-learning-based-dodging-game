@@ -2,7 +2,7 @@
 
 This repository contains a simple Reinforcement Learning (RL) based game developed using Python and Pygame. The game simulates a scenario where the player controls a character that must dodge falling objects (kunai) to survive. The character's movements are controlled by a Q-learning algorithm, which allows it to learn and improve its ability to avoid collisions over time.
 
-Uploading rl_py.mp4…
+https://github.com/user-attachments/assets/8b7fa1e7-295b-4c41-a654-95633c5b1d84
 
 Game Description
 In the game, the player is represented by a green square at the bottom of the screen, and the falling objects are represented by red rectangles. The objective is to avoid as many falling objects as possible, maximizing the score. The player starts in the middle of the screen and can move left or right to avoid the falling objects.
