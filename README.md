@@ -25,15 +25,15 @@ Q-Table: The algorithm maintains a Q-table that maps state-action pairs to expec
 Epsilon-Greedy Policy: During training, the player uses an epsilon-greedy policy to balance exploration (trying new actions) and exploitation (choosing the best-known action).
 Learning and Decay: As the game progresses, the learning rate and epsilon value decay to fine-tune the model and reduce random actions.
 
-You can install the required packages using pip:
-```
-pip install pygame numpy
-```
-How to Run the Game
+**How to Run the Game**
 Clone the repository:
 ```
 git clone https://github.com/Ahnaf-nub/Reinforcement-Q-learning-based-dodging-game.git
 cd Reinforcement-Q-learning-based-dodging-game
+```
+Install the required packages using pip:
+```
+pip install -r requirements.txt
 ```
 Run the game:
 
